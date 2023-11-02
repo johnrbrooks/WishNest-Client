@@ -1,0 +1,53 @@
+@import '../../../global.scss';
+
+.page-title {
+    font-size: 7rem;
+}
+
+.landing-cta-grid-container {
+    width: 100%;
+    margin: auto auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+}
+
+.landing-cta-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary-color;
+    padding: 2rem;
+    width: 350px;
+    min-width: 320px;
+    height: 350px;
+    border-radius: 15px;
+}
+
+.landing-benefit-details {
+    line-height: 25px;
+}
+
+.landing-icon {
+    font-size: 60px;
+    margin-bottom: 1rem;
+}
+
+.CTA {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 5rem;
+    font-size: $font-size-xl;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+}
+
+.landing-arrow-icon {
+    font-size: 25px;
+    margin-left: 2rem;
+}
