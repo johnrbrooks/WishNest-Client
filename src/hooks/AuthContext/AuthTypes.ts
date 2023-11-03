@@ -8,17 +8,15 @@ type AuthContextType = {
   };
   
   type User = {
-    id: number;
-    name: string;
+    id: string;
+    firstName: string;
     email: string;
-    password: string;
     family_id: number;
     // ... other user properties
   };
   
   type Family = {
-    id: number;
-    name: string;
-    password: string;
+    id: string;
+    familyName: string;
     // ... other family properties
   };

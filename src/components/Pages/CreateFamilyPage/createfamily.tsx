@@ -116,8 +116,8 @@ const CreateFamily = () => {
             console.error('An error occurred: ', error.response?.data || error.message);
             setLoading(false);
         }
-        return null;
         setLoading(false);
+        return null;
     }
 
     const createUserWithFamily = async (family_id: string): Promise<boolean> => {
@@ -132,8 +132,8 @@ const CreateFamily = () => {
             console.error('An error occurred: ', error.response?.data || error.message);
             setLoading(false);
         }
-        return false;
         setLoading(false);
+        return false;
     }
 
     const handleCreation = async() => {
@@ -142,7 +142,7 @@ const CreateFamily = () => {
             const userCreated = await createUserWithFamily(familyId);
             if(userCreated) {
                 console.log('Family and user successfully created!');
-                navigate('/');
+                navigate('/signin');
                 setLoading(false);
             } else {
                 console.error('Failed to create user after family was successfully created.');
