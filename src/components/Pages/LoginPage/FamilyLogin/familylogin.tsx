@@ -1,6 +1,10 @@
 import './familylogin.scss';
+import { useNavigate } from 'react-router-dom';
 
 const FamilyLogin = () => {
+
+    const navigate = useNavigate();
+
     return (
         <>
             <div className="landing-page">
@@ -15,7 +19,7 @@ const FamilyLogin = () => {
                         <p className="forgot-password">Forgot Password?</p>
                         <button type="submit" className="primary login-btn">Log in</button>
                         <p>Haven't added your family yet?</p>
-                        <button className="secondary">Create Family</button>
+                        <button className="secondary" onClick={() => navigate('/family/signup')}>Create Family</button>
                     </form>
                 </div>
             </div>
