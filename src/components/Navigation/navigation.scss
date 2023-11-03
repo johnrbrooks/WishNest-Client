@@ -1,7 +1,7 @@
 @import '../../global.scss';
 
 nav {
-    background-color: $primary-color;
+    background-color: rgba($primary-color, 0.6);
     display: flex;
     justify-content: space-between;
     align-items: center;
