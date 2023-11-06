@@ -49,8 +49,8 @@ const FamilyLogin = () => {
             const response = await axios.post(`${API_URL}families/login`, familyLoginData);
             if(response && response.data) {
                 return {
-                    id: response.data.id,
-                    familyName: response.data.familyName,
+                    id: response.data.family.id,
+                    familyName: response.data.family.familyName,
                 };
             } else {
                 setFamilyLoginErrorMessage('An error occurred. Please try again.');
@@ -76,15 +76,18 @@ const FamilyLogin = () => {
 
         const familyData = await checkLoginCredentials();
         if(familyData) {
-            setLoading(false);
+            
+            sessionStorage.setItem('currentFamily', JSON.stringify(familyData));
+
             setCurrentFamily(familyData);
             console.log('Login was successful!');
+            setLoading(false);
+            navigate('/userlogin');
         } else {
             setLoading(false);
             setFamilyLoginErrorMessage('Family name or password incorrect.');
         }
     }
-
 
     return (
         <>
