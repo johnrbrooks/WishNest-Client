@@ -18,9 +18,7 @@ const Navigation = () => {
     }, [currentFamily, currentUser])
 
     const handleLogOut = () => {
-        sessionStorage.removeItem('currentFamily');
-        sessionStorage.removeItem('currentUser');
-        sessionStorage.removeItem('token');
+        sessionStorage.clear();
         setCurrentFamily(null);
         setCurrentUser(null);
         setToken(null);
@@ -30,9 +28,10 @@ const Navigation = () => {
         <>
             <nav>
                 <h1>WishNest</h1>
-                <div className="links-container">
+                <div className={`${isLoggedIn ? "links-container-logged-in" : "links-container"}`}>
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
+                    {isLoggedIn? <Link to="/dashboard">Dashboard</Link> : null}
                     {isLoggedIn? (<Link to="/signin" onClick={handleLogOut}>Log Out</Link>) : (<Link to="/signin">Sign In</Link>)}
                 </div>
             </nav>

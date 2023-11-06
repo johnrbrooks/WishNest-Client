@@ -1,0 +1,11 @@
+@import '../../../../global.scss';
+
+.dashboard-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-top: 7rem;
+}
+

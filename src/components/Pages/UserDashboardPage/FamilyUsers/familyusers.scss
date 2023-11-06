@@ -1,0 +1,55 @@
+@import '../../../../global.scss';
+
+.family-user-list-container {
+    width: 385px;
+    background-color: $primary-color;
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.title-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.family-users-title {
+    margin: 0;
+}
+
+.add-user-icon {
+    font-size: 30px;
+}
+
+.add-user-icon:hover {
+    color: $secondary-color;
+    cursor: pointer;
+}
+
+.user-item-container {
+    width: 100%;
+    background-color: white;
+    color: $primary-color;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    transition: 0.3s;
+}
+
+.user-item-container:hover {
+    background-color: $success-color;
+    color: white;
+    cursor: pointer;
+}
+
+.user-list-name {
+    margin: 0;
+}

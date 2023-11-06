@@ -1,27 +1,42 @@
 import './userdashboardlanding.scss';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../../../hooks/AuthContext/AuthContext';
+import useSessionStorage from '../../../../hooks/SessionStorage/useSessionStorage';
+import Loading from 'react-loading';
+import FamilyGiftList from '../FamilyUserGiftList/familyusergiftlist';
+import FamilyUserList from '../FamilyUsers/familyusers';
 
 const UserDashboardLanding = () => {
 
     const { currentFamily, setCurrentFamily, currentUser, setCurrentUser, token, setToken } = useAuth();
+    const [loading, setLoading] = useState(true); 
 
-    const navigate = useNavigate();
-    
-    console.log(currentUser);
+    const { resetContextFromStorage } = useSessionStorage();
 
     useEffect(() => {
         if(!currentUser || !currentFamily || !token) {
-            //get from session storage
-            navigate('/signin');
+            resetContextFromStorage();
         }
-    }, [currentFamily, currentUser, token])
+        setLoading(false); // Set loading to false once done
+    }, [currentFamily, currentUser, token]);
+
+    if(loading) {
+        return <Loading type={"spin"} color="#000000" height={667} width={375} />;
+    }
 
     return (
-        <>
-            <h1>Welcome to WishNest {currentUser.firstName}!</h1>
-            <h2>See your family's gift requests below:</h2>
+        <><div className="dashboard-page">
+            <div className="dashboard-titles">
+                <h1>Welcome to WishNest {currentUser.firstName}!</h1>
+                <h2>See your family's gift requests below:</h2>
+            </div>
+            <div className="gift-list-container">
+                <FamilyGiftList />
+            </div>
+            <div className="user-list-container">
+                <FamilyUserList />
+            </div>
+        </div>
         </>
     )
 }
