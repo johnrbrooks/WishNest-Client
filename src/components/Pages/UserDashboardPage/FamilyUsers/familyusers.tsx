@@ -1,11 +1,13 @@
 import './familyusers.scss';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../../../hooks/AuthContext/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useSessionStorage from '../../../../hooks/SessionStorage/useSessionStorage';
 import Loading from 'react-loading';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiRefreshCw } from 'react-icons/fi';
+import { MdDeleteOutline } from 'react-icons/md';
 import AddUser from '../FamilyUsers/AddUser/adduser';
 
 type Gift = {
@@ -35,6 +37,8 @@ const FamilyUserList = () => {
     const [loading, setLoading] = useState(false); 
 
     const { resetContextFromStorage } = useSessionStorage();
+
+    const navigate = useNavigate();
 
     const API_URL = import.meta.env.VITE_API_URL;
 

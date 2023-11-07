@@ -30,9 +30,6 @@ const UserDashboardLanding = () => {
                 <h1>Welcome to WishNest {currentUser.firstName}!</h1>
                 <h2>See your family's gift requests below:</h2>
             </div>
-            <div className="gift-list-container">
-                <FamilyGiftList />
-            </div>
             <div className="user-list-container">
                 <FamilyUserList />
             </div>
