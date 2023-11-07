@@ -89,7 +89,7 @@ const CreateFamily = () => {
         }
         setUserErrorMessage('');
         return true;
-    }
+    };
 
     const validateUserPassword = (): boolean => {
         if(userData.userPassword === userData.confirmUserPassword) {
@@ -103,7 +103,7 @@ const CreateFamily = () => {
             setUserErrorMessage(`The passwords don't match!`);
             return false;
         }
-    }
+    };
 
     const createFamily = async (): Promise<string | null> => {
         try {

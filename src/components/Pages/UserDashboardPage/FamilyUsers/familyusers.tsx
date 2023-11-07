@@ -1,10 +1,11 @@
 import './familyusers.scss';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../../../hooks/AuthContext/AuthContext';
 import axios from 'axios';
 import useSessionStorage from '../../../../hooks/SessionStorage/useSessionStorage';
 import Loading from 'react-loading';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { FiRefreshCw } from 'react-icons/fi';
 import AddUser from '../FamilyUsers/AddUser/adduser';
 
 type Gift = {
@@ -45,23 +46,23 @@ const FamilyUserList = () => {
     }, [currentFamily, currentUser, token]);
 
     useEffect(() => {
-        const fetchFamilyUsersAndTheirGifts = async () => {
-            setLoading(true);
-            const users = await retrieveFamilyUsers();
-            const usersData: User[] = [];
-            
+        fetchFamilyUsersAndTheirGifts();
+    }, []);
+
+    const fetchFamilyUsersAndTheirGifts = useCallback(async () => {
+        setLoading(true);
+        const users = await retrieveFamilyUsers();
+        const usersData: User[] = [];
+        
+        if (users) {
             for (const user of users) {
                 const gifts = await retrieveUserGifts(user.id);
                 usersData.push({...user, gifts});
             }
-
             setUsersWithGifts(usersData);
-            setLoading(false);
-        };
-    
-        fetchFamilyUsersAndTheirGifts();
+        }
         setLoading(false);
-    }, []);
+    }, [currentFamily?.id]);
     
     const retrieveFamilyUsers = async (): Promise<User[] | null> => {
         try {
@@ -93,7 +94,7 @@ const FamilyUserList = () => {
                 
             ) : isAddUser ? (
                 <div className="add-user-container">
-                    <AddUser isAddUser={isAddUser} setIsAddUser={setIsAddUser}/>
+                    <AddUser isAddUser={isAddUser} setIsAddUser={setIsAddUser} onUserAdded={fetchFamilyUsersAndTheirGifts}/>
                 </div>
             ) : (
                 <div className="family-user-list-container">
@@ -101,7 +102,8 @@ const FamilyUserList = () => {
                         <h3 className="family-users-title">Family User List</h3>
                         <AiOutlinePlus 
                             className="add-user-icon"
-                            onClick={() => {setIsAddUser(true)}}/>
+                            onClick={() => {setIsAddUser(true)}}
+                        />
                     </div>
                     {usersWithGifts?.map((user) => (
                         <div className="user-item-container" key={user.id}>
