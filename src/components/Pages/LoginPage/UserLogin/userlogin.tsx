@@ -126,7 +126,7 @@ const UserLogin = () => {
                             {loading ? <Loading type={"spin"} color={"#FFFFFF"} height={25} width={25} /> : 'Log in'}
                         </button>
                         <p>Haven't added your user yet?</p>
-                        <button className="secondary" onClick={() => navigate('/family/signup')}>Create User</button>
+                        <button className="secondary" onClick={() => navigate('/user/signup')}>Create User</button>
                     </form>
                 </div>
             </div>

@@ -114,6 +114,9 @@ const CreateFamily = () => {
             }
         } catch (error: any) {
             console.error('An error occurred: ', error.response?.data || error.message);
+            if (error.response?.status === 400) {
+                setFamilyErrorMessage('This family already has an account!');
+            }
             setLoading(false);
         }
         setLoading(false);
@@ -130,6 +133,9 @@ const CreateFamily = () => {
             }
         } catch (error: any) {
             console.error('An error occurred: ', error.response?.data || error.message);
+            if (error.response?.status === 400) {
+                setUserErrorMessage('This email address is already in use.');
+            }
             setLoading(false);
         }
         setLoading(false);
@@ -154,7 +160,7 @@ const CreateFamily = () => {
         }
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
@@ -167,7 +173,7 @@ const CreateFamily = () => {
         const isUserPasswordValid = validateUserPassword();
         if(!isUserPasswordValid) {setLoading(false); return;}
 
-        handleCreation();
+        await handleCreation();
     }
 
     return (

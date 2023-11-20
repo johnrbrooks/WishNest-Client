@@ -1,0 +1,69 @@
+@import '../../../../global.scss';
+
+.gift-list-container {
+    margin-top: 10rem;
+    flex-wrap: wrap;
+    background-color: $primary-color;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.user-gift-list-header {
+    margin-bottom: 2rem;
+}
+
+.user-gift-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    background-color: $secondary-color;
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.user-gift-item:hover {
+    background-color: $success-color;
+    cursor: pointer;
+}
+
+.item-top-container {
+    display: flex;
+}
+
+.user-gift-item-image {
+    width: 150px; /* Adjust as needed */
+    height: 150px;
+    border-radius: 15px;
+}
+
+.item-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.price-priority-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.gift-item-title {
+    font-size: $font-size-large;
+}
+
+.gift-item-price,
+.gift-item-priority {
+    font-size: $font-size-large;
+}
+
+.gift-item-description,
+.gift-item-description-title {
+    text-align: left;
+}
+
+.gift-item-description-title {
+    font-size: $font-size-large;
+}

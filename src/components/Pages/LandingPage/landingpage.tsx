@@ -4,10 +4,25 @@ import { AiOutlineOrderedList } from 'react-icons/ai';
 import { BsCheck2Square } from 'react-icons/bs';
 import { ImEyeBlocked } from 'react-icons/im';
 import { FaArrowRight } from 'react-icons/fa';
+import { useEffect } from 'react';
+import { useAuth } from '../../../hooks/AuthContext/AuthContext';
+import useSessionStorage from '../../../hooks/SessionStorage/useSessionStorage';
 
 const LandingPage = () => {
 
+    const { currentUser, setCurrentUser, currentFamily, setCurrentFamily, token, setToken } = useAuth();
+
     const navigate = useNavigate();
+
+    const determineRoute = () => {
+        if (currentUser && currentFamily && token) {
+            return '/dashboard';  // Assuming '/dashboard' is the route you want to go to
+        } else if (!currentFamily) {
+            return '/signin'; // Assuming '/familylogin' is your route for family login
+        } else if (!currentUser) {
+            return '/userlogin';  // Assuming '/userlogin' is your route for user login
+        }
+    }
 
     return (
         <>
@@ -40,11 +55,10 @@ const LandingPage = () => {
             </div>
             <button 
                 className="primary CTA"
-                onClick={() => navigate('/signin')}>
+                onClick={() => navigate(determineRoute())}>
                     Start gifting better 
                     <FaArrowRight className="landing-arrow-icon"/>
             </button>
-
         </>
     )
 }

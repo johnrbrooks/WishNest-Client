@@ -9,6 +9,8 @@ import About from './components/Pages/About/About';
 import CreateFamily from './components/Pages/CreateFamilyPage/createfamily';
 import UserLogin from './components/Pages/LoginPage/UserLogin/userlogin';
 import UserDashboardLanding from './components/Pages/UserDashboardPage/UserDashboardLanding/userdashboardlanding';
+import FamilyMember from './components/Pages/UserDashboardPage/FamilyMember/familymember';
+import AddUser from './components/Pages/UserDashboardPage/FamilyUsers/AddUser/adduser';
 
 function App() {
 
@@ -27,9 +29,14 @@ function App() {
             <Route path="/signin" element={<FamilyLogin />}/>
             <Route path="/userlogin" element={<UserLogin />}/>
             <Route path="/family/signup" element={<CreateFamily />}/>
+            <Route path="/user/signup" element={<AddUser />}/>
             <Route path="/dashboard" element={<UserDashboardLanding />}/>
+            <Route path="dashboard/users/:userId" element={<FamilyMember />}/>
+            <Route
+              path="/*"
+              element={<h1>404: Page Not Found</h1>}
+            />
           </Routes>
-
         </div>
       </AuthProvider>
     </>

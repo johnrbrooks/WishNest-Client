@@ -56,10 +56,11 @@ const FamilyUserList = () => {
     const fetchFamilyUsersAndTheirGifts = useCallback(async () => {
         setLoading(true);
         const users = await retrieveFamilyUsers();
+        const filteredUsers = users?.filter((user) => user.email !== currentUser?.email)
         const usersData: User[] = [];
         
-        if (users) {
-            for (const user of users) {
+        if (filteredUsers) {
+            for (const user of filteredUsers) {
                 const gifts = await retrieveUserGifts(user.id);
                 usersData.push({...user, gifts});
             }
@@ -70,7 +71,7 @@ const FamilyUserList = () => {
     
     const retrieveFamilyUsers = async (): Promise<User[] | null> => {
         try {
-            const response = await axios.get(`${API_URL}users/family/${currentFamily.id}`);
+            const response = await axios.get(`${API_URL}users/family/${currentFamily?.id}`);
             return response.data;
         } catch (error) {
             console.error("There was an error retrieving the users ", error);
@@ -80,7 +81,7 @@ const FamilyUserList = () => {
     
     const retrieveUserGifts = async (userId: string): Promise<Gift[]> => {
         try {
-            const response = await axios.get(`${API_URL}gifts/user/${userId}`);
+            const response = await axios.get(`${API_URL}gifts/gifts/user/${userId}`);
             return response.data;
         } catch (error) {
             console.error(`There was an error retrieving the gifts for user ${userId} `, error);
@@ -110,7 +111,7 @@ const FamilyUserList = () => {
                         />
                     </div>
                     {usersWithGifts?.map((user) => (
-                        <div className="user-item-container" key={user.id}>
+                        <div className="user-item-container" key={user.id} onClick={() => navigate(`users/${user.id}`)}>
                             <h3 className="user-list-name">{user.firstName}</h3>
                             <h3 className="user-list-name">{user.gifts?.length}</h3>
                         </div>

@@ -76,6 +76,10 @@ const AddUser: React.FC<AddUserProps> = ({ isAddUser, setIsAddUser, onUserAdded,
             }
         } catch (error: any) {
             console.error('An error occurred: ', error.response?.data || error.message);
+            if(error.response?.status === 400) {
+                console.log('This email address is already in use.');
+                setAddUserErrorMessage('This email address is already in use.');
+            }
             setLoading(false);
         }
         setLoading(false);
