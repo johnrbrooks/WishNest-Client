@@ -41,13 +41,12 @@ const FamilyMember = () => {
     const API_URL = import.meta.env.VITE_API_URL;
 
     const { userId } = useParams();
-    const navigate = useNavigate();
     
     useEffect(() => {
         if(!currentUser || !currentFamily || !token) {
             resetContextFromStorage();
         }
-        setLoading(false); // Set loading to false once done
+        setLoading(false); 
     }, [currentFamily, currentUser, token]);
 
     useEffect(() => {
@@ -88,14 +87,19 @@ const FamilyMember = () => {
 
     const sortUserGifts = () => {
         if (selectedUserGifts) {
-            // Create a new array to avoid mutating the state directly
             const sortedGifts = [...selectedUserGifts].sort((a, b) => {
-                if (a.purchased !== b.purchased) {
-                    return a.purchased ? 1 : -1;
+                // First, sort by the 'purchased' status
+                if (a.purchased && !b.purchased) {
+                    return 1; // a is purchased, b is not, a goes after b
+                } else if (!a.purchased && b.purchased) {
+                    return -1; // a is not purchased, b is, a goes before b
+                } else {
+                    // If both have the same 'purchased' status, sort by 'priority'
+                    return a.priority - b.priority;
                 }
-                return b.priority - a.priority;
             });
-            setSortedSelectedUserGifts(sortedGifts)            
+            setSortedSelectedUserGifts(sortedGifts);
+            setLoading(false);
         }
     }
 
@@ -120,41 +124,43 @@ const FamilyMember = () => {
         <>
             {loading ? (
                 <div className="family-user-list-container">
-                <h3>User Gift List</h3>
-                <Loading type={"spin"} color="#FFFFFF" height={250} width={250} />
-            </div>
+                    <h3>User Gift List</h3>
+                    <Loading type={"spin"} color="#FFFFFF" height={250} width={250} />
+                </div>
             ) : (
                 <div className="gift-list-container">
                     <h1 className="user-gift-list-header">{selectedUser?.firstName}'s Gift List</h1>
-                    {selectedUserGifts && selectedUserGifts.length > 0 ? (selectedUserGifts?.map(gift =>
-                        <div 
-                        className={`user-gift-item ${gift.purchased ? "user-gift-item-disabled" : ""}`}
-                        key={gift.id}
-                        >
-                
-                        <div className="item-top-container">
-                            <img src={gift.picture} className="user-gift-item-image" alt="" />
-                
-                            <div className="item-info-container">
-                                <h2 className="gift-item-title">{gift.title}</h2>
-                                <div className="price-priority-container">
-                                    <h3 className="gift-item-price">Price: ${gift.price}</h3>
-                                    <h3 className="gift-item-priority">Priority: {gift.priority}</h3>
+                    <div className="gift-items-container">
+                        {sortedSelectedUserGifts && sortedSelectedUserGifts.length > 0 ? (sortedSelectedUserGifts?.map(gift =>
+                            <div 
+                            className={`user-gift-item ${gift.purchased ? "user-gift-item-disabled" : ""}`}
+                            key={gift.id}
+                            >
+                    
+                            <div className="item-top-container">
+                                <img src={gift.picture} className="user-gift-item-image" alt="" />
+                    
+                                <div className="item-info-container">
+                                    <h2 className="gift-item-title">{gift.title}</h2>
+                                    <div className="price-priority-container">
+                                        <h3 className="gift-item-price">Price: ${gift.price}</h3>
+                                        <h3 className="gift-item-priority">Priority: {gift.priority}</h3>
+                                    </div>
                                 </div>
                             </div>
+                    
+                            <p className="gift-item-description-title">Description:</p>
+                            <p className="gift-item-description">{gift.description}</p>
+                            <button className={`purchased-button ${gift.purchased ? "unmark-button" : ""}`}
+                                onClick={() => markAsBought(gift.id, !gift.purchased)}>
+                                    {gift.purchased ? 'Mark not purchased' : 'Mark as purchased'}
+                            </button>
+                            <button className="go-to-button" onClick={() => window.open(gift.link, '_blank')}>Go to item</button>
                         </div>
-                
-                        <p className="gift-item-description-title">Description:</p>
-                        <p className="gift-item-description">{gift.description}</p>
-                        <button className={`purchased-button ${gift.purchased ? "unmark-button" : ""}`}
-                            onClick={() => markAsBought(gift.id, !gift.purchased)}>
-                                {gift.purchased ? 'Mark not purchased' : 'Mark as purchased'}
-                        </button>
-                        <button className="go-to-button" onClick={() => window.open(gift.link, '_blank')}>Go to item</button>
+                        )) : (
+                            <h3>This user has not added any gifts.</h3>
+                        )} 
                     </div>
-                    )) : (
-                        <h3>This user has not added any gifts.</h3>
-                    )} 
                 </div>
             )}
         </>
