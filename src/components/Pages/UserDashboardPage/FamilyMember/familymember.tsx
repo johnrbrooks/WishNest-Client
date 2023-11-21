@@ -99,6 +99,23 @@ const FamilyMember = () => {
         }
     }
 
+    const markAsBought = async (giftId: string, purchasedStatus: boolean) => {
+        try {
+            const response = await axios.put(`${API_URL}gifts/${giftId}`, {
+                purchased: purchasedStatus
+            });
+            if (response.status === 200 || response.status === 201) {
+                console.log("Gift purchase status updated successfully.");
+                // Refresh the gifts list here
+                getUserGifts().then(() => sortUserGifts());
+            } else {
+                console.error("Failed to update gift purchase status.");
+            }
+        } catch (error) {
+            console.error("Error in updating gift purchase status: ", error);
+        }
+    };
+
     return (
         <>
             {loading ? (
@@ -111,7 +128,7 @@ const FamilyMember = () => {
                     <h1 className="user-gift-list-header">{selectedUser?.firstName}'s Gift List</h1>
                     {selectedUserGifts && selectedUserGifts.length > 0 ? (selectedUserGifts?.map(gift =>
                         <div 
-                        className="user-gift-item" 
+                        className={`user-gift-item ${gift.purchased ? "user-gift-item-disabled" : ""}`}
                         key={gift.id}
                         >
                 
@@ -129,7 +146,10 @@ const FamilyMember = () => {
                 
                         <p className="gift-item-description-title">Description:</p>
                         <p className="gift-item-description">{gift.description}</p>
-                        <button className="purchased-button">Mark as bought</button>
+                        <button className={`purchased-button ${gift.purchased ? "unmark-button" : ""}`}
+                            onClick={() => markAsBought(gift.id, !gift.purchased)}>
+                                {gift.purchased ? 'Mark not purchased' : 'Mark as purchased'}
+                        </button>
                         <button className="go-to-button" onClick={() => window.open(gift.link, '_blank')}>Go to item</button>
                     </div>
                     )) : (

@@ -77,3 +77,25 @@
 .go-to-button {
     margin-top: 1rem;
 }
+
+.user-gift-item-disabled {
+    color: #616161; /* Gray out the text color */
+    background-color: #bababa; /* Light gray background */
+    opacity: 0.5; /* Slightly transparent */
+    pointer-events: none; /* Disables interaction */
+}
+
+.user-gift-item-disabled .unmark-button {
+    pointer-events: auto; /* Re-enable interaction for the button */
+    background-color: #fff; /* Style for the button */
+    color: #333; /* Button text color */
+    border: 2px solid transparent; /* Optional: border for the button */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transition for hover effects */
+}
+
+.user-gift-item-disabled .unmark-button:hover {
+    background-color: $success-color; /* Bright background color on hover */
+    color: #fff; /* Text color on hover */
+    border-color: $success-color; /* Optional: border color on hover */
+    cursor: pointer; /* Change cursor to indicate clickable */
+}
