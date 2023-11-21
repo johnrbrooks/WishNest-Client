@@ -21,11 +21,6 @@
     border-radius: 15px;
 }
 
-.user-gift-item:hover {
-    background-color: $success-color;
-    cursor: pointer;
-}
-
 .item-top-container {
     display: flex;
 }
@@ -66,4 +61,19 @@
 
 .gift-item-description-title {
     font-size: $font-size-large;
+}
+
+.purchased-button,
+.go-to-button {
+    background-color: $primary-color;
+    color: white;
+}
+
+.purchased-button:hover,
+.go-to-button:hover {
+    background-color: $success-color;
+}
+
+.go-to-button {
+    margin-top: 1rem;
 }

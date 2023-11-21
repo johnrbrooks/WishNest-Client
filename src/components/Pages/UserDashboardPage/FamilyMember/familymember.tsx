@@ -113,7 +113,7 @@ const FamilyMember = () => {
                         <div 
                         className="user-gift-item" 
                         key={gift.id}
-                        onClick={() => window.open(gift.link, '_blank')}>
+                        >
                 
                         <div className="item-top-container">
                             <img src={gift.picture} className="user-gift-item-image" alt="" />
@@ -129,6 +129,8 @@ const FamilyMember = () => {
                 
                         <p className="gift-item-description-title">Description:</p>
                         <p className="gift-item-description">{gift.description}</p>
+                        <button className="purchased-button">Mark as bought</button>
+                        <button className="go-to-button" onClick={() => window.open(gift.link, '_blank')}>Go to item</button>
                     </div>
                     )) : (
                         <h3>This user has not added any gifts.</h3>
