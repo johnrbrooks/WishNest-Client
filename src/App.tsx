@@ -11,6 +11,7 @@ import UserLogin from './components/Pages/LoginPage/UserLogin/userlogin';
 import UserDashboardLanding from './components/Pages/UserDashboardPage/UserDashboardLanding/userdashboardlanding';
 import FamilyMember from './components/Pages/UserDashboardPage/FamilyMember/familymember';
 import AddUser from './components/Pages/UserDashboardPage/FamilyUsers/AddUser/adduser';
+import MyGifts from './components/Pages/UserDashboardPage/MyGifts/mygifts';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/family/signup" element={<CreateFamily />}/>
             <Route path="/user/signup" element={<AddUser />}/>
             <Route path="/dashboard" element={<UserDashboardLanding />}/>
+            <Route path="/mygifts" element={<MyGifts />}/>
             <Route path="dashboard/users/:userId" element={<FamilyMember />}/>
             <Route
               path="/*"

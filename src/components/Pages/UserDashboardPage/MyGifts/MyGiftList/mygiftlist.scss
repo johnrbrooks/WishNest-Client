@@ -1,0 +1,96 @@
+@import '../../../../../global.scss';
+
+.my-gift-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $secondary-color;
+    padding: 1rem;
+    border-radius: 15px;
+    gap: 1rem;
+}
+
+.delete-item-container {
+    width: 100%;
+    text-align: right;
+    padding: 0.25rem;
+}
+
+.delete-gift-item {
+    font-size: 2rem;
+}
+
+.delete-gift-item:hover {
+    color: $alert-color;
+    cursor: pointer;
+}
+
+.my-gift-list-item {
+    min-width: 425px;
+    background-color: $primary-color;
+    border-radius: 15px;
+}
+
+.my-gift-top-container {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.my-gift-item-image {
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    min-height: 150px;
+    border-radius: 15px;
+}
+
+.gift-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.my-gift-item-title {
+    font-size: $font-size-large;
+    text-align: left;
+}
+
+.my-gift-item-info {
+    font-size: $font-size-base;
+}
+
+.my-gift-item-link {
+    width: 100%;
+    background-color: $secondary-color;
+    border-radius: 25px;
+    font-size: $font-size-large;
+}
+
+.my-gift-item-link:hover {
+    background-color: $success-color;
+    color: white;
+}
+
+.my-gift-info-container {
+    width: 100%;
+}
+
+.description-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 1rem;
+    padding-top: 0;
+}
+
+.edit-gift-button {
+    margin-bottom: 1rem;
+}

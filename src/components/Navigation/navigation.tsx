@@ -32,6 +32,7 @@ const Navigation = () => {
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
                     {isLoggedIn? <Link to="/dashboard">Dashboard</Link> : null}
+                    {isLoggedIn? <Link to="/mygifts">My Gifts</Link> : null}
                     {isLoggedIn? (<Link to="/signin" onClick={handleLogOut}>Log Out</Link>) : (<Link to="/signin">Sign In</Link>)}
                 </div>
             </nav>
