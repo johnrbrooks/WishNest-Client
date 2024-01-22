@@ -34,6 +34,7 @@ const FamilyMember = () => {
     const [loading, setLoading] = useState(false);
     const [familyMemberGifts, setFamilyMemberGifts] = useState([]); 
     const [sortedFamilyMemberGifts, setSortedFamilyMemberGifts] = useState([]);
+    const [selectedUser, setSelectedUser] = useState();
     const [errorMessage, setErrorMessage] = useState('');
 
     const { resetContextFromStorage } = useSessionStorage();
@@ -54,10 +55,29 @@ const FamilyMember = () => {
         const retrieveGiftsAndSort = async () => {
             await retrieveFamilyMemberGifts(userId);
             sortUserGifts();
+            setLoading(false);
         }
         retrieveGiftsAndSort();
-        setLoading(false);
     }, [userId])
+
+    useEffect(() => {
+        setLoading(true);
+        const retrieveSelectedUser = async() => {
+            await retrieveSelectedUserData(userId);
+            setLoading(false);
+        }
+        retrieveSelectedUser();
+    }, [userId])
+
+    const retrieveSelectedUserData = async (userId: string) => {
+        try {
+            const response = await axios.get(`${API_URL}users/${userId}`);
+            setSelectedUser(response.data);
+        } catch(error) {
+            console.error(`There was an error retrieving the family member's data`, error);
+            setErrorMessage('This family member was not found.');
+        }
+    }
 
     const retrieveFamilyMemberGifts = async (userId: string) => {
         try {
@@ -71,22 +91,46 @@ const FamilyMember = () => {
 
     const sortUserGifts = () => {
         if (familyMemberGifts) {
+            setLoading(true); // Start loading
+    
             const sortedGifts = [...familyMemberGifts].sort((a, b) => {
-                // First, sort by the 'purchased' status
-                if (a.purchased && !b.purchased) {
-                    return 1; // a is purchased, b is not, a goes after b
-                } else if (!a.purchased && b.purchased) {
-                    return -1; // a is not purchased, b is, a goes before b
-                } else {
-                    // If both have the same 'purchased' status, sort by 'priority'
-                    return a.priority - b.priority;
-                }
+                return b.priority - a.priority; // Sorting by priority
             });
     
             setSortedFamilyMemberGifts(sortedGifts);
+    
+            setLoading(false); // End loading
         }
     };
-
+    
+    const markAsBought = async (giftId: string, purchasedStatus: boolean) => {
+        try {
+            const response = await axios.put(`${API_URL}gifts/${giftId}`, {
+                purchased: purchasedStatus
+            });
+    
+            if (response.status === 200 || response.status === 201) {
+                console.log("Gift purchase status updated successfully.");
+    
+                // Update the state to reflect the change
+                const updatedGifts = familyMemberGifts.map(gift => {
+                    if (gift.id === giftId) {
+                        return { ...gift, purchased: purchasedStatus };
+                    }
+                    return gift;
+                });
+    
+                setFamilyMemberGifts(updatedGifts);
+    
+                // Re-sort gifts after updating the state
+                sortUserGifts();
+            } else {
+                console.error("Failed to update gift purchase status.");
+            }
+        } catch (error) {
+            console.error("Error in updating gift purchase status: ", error);
+        }
+    };
     
 
     return (
@@ -98,7 +142,7 @@ const FamilyMember = () => {
                 </div>
             ) : (
                 <div className="gift-list-container">
-                    <h1 className="user-gift-list-header">Gift List</h1>
+                    <h1 className="user-gift-list-header">{selectedUser?.firstName}'s Gift List</h1>
                     <div className="gift-items-container">
                         {familyMemberGifts.length > 0 ? (
                             familyMemberGifts.map(gift => (
